@@ -1,0 +1,111 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color:rgb(58, 58, 58);
+}
+
+.register{
+    width: 300px;
+    height: 270px;
+    margin: 220px auto;
+    padding: 15px 30px;
+    background-color: #eee;
+    border-radius: 8px;
+}
+
+.title{
+    height: 35px;
+    margin-bottom: 5px;
+
+}
+
+.title span{
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.title .current{
+    color: red;
+}
+
+.form div{
+    width: 290px;
+    height: 40px;
+    background-color: #fff;
+    margin-bottom: 32px;
+    border-radius: 5px;
+    padding: 5px;
+    position: relative;
+    line-height: 40px;
+}
+
+.user_info{
+    position: absolute;
+    display: block;
+    height: 30px;
+    color: #f11;
+}
+
+.pwd_info{
+
+    display: block;
+    height: 30px;
+    color: #f11;
+}
+
+.form div span{
+    display:inline-block;
+    font-size: 18px;
+    color: #666;
+}
+
+.form div input{
+    border: none;
+    outline: none;
+    font-size: 18px;
+    color: #666;
+}
+
+.form div i{
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    /* background: url(../img/icon.png) no-repeat 0 -67px; */
+    top: 18px;
+    right: 10px;
+
+}
+
+.form div i.ok{
+    background: url(../img/icon.png) no-repeat 0 -67px;
+}
+
+.form div i.no{
+    background: url(../img/icon.png) no-repeat -17px -67px;
+}
+
+.button{
+    width: 290px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background: #f11;
+    border-radius: 30px;
+}
+
+.button a{
+    display: none;
+    color: #fff;
+    font-size: 16px;
+    text-decoration: none;
+
+}
+.button a.show{
+    display: block;
+}

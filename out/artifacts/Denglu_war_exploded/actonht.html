@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="css/test.css">
+
+</head>
+<body>
+  <div class="register">
+      <p class="title" id="title">
+        <span>登录</span>
+        <span class="current">注册</span>
+      </p>
+    <div class="form">
+    <div>
+      <span>+86</span>
+      <input type="text" class="user" id = "user" placeholder="请输入注册手机号">
+      <i class="" id="user_icon"></i>
+      <p class="user_info " id="user_info"></p>
+    </div>
+    <div>
+      <input type="password" class="pwd" id="pwd" placeholder="请输入密码">
+      <i class="" id="pwd_icon"></i>
+      <p class="pwd_info" id="pwd_info"></p>
+    </div>
+    <p class="button">
+      <a href="javascript::" id="sigup-btn" class="btn show">注册</a>
+      <a href="javascript::" id="login-btn" class="btn">登录</a>
+    </p>
+  </div>
+</div>
+<script type="text/javascript" src="ajaxy.js"></script>
+<script>
+    var   user=document.getElementById("user"),
+          pwd=document.getElementById("pwd"),
+          sigup = document.getElementById("sigup-btn"),   //注册按钮
+          login = document.getElementById("login-btn"),   //登录按钮
+          user_info = document.getElementById("user_info"),   //用户名提示
+          pwd_info = document.getElementById("pwd_info"),     //密码提示
+
+
+
+            isRepeat = false,   //用户名是否被占用
+            userReg = /^1[356789]\d{9}$/, //用户名正则
+            pwdReg = /\w{5,12}/,    //密码正则
+            title = document.getElementById("title").children;  //登录、注册标题
+    for(var i=0;i<title.length;i++){
+      title[i].addEventListener("click",checkTitle,true);
+    }
+    user.addEventListener("blur",checkUser,true);
+    //密码监听事件 检测密码
+    pwd.addEventListener("blur",checkPwd,true);
+    //注册监听
+    sigup.addEventListener("click",register,true);
+
+    function checkUser(){
+      userVal = user.value;
+      if(!userReg.test(user.value)){
+        user_info.innerHTML = "手机号码不正确";
+        user_icon.className = "no";
+      }else{
+        user_info.innerHTML = "";
+        user_icon.className = "";
+        $.ajax({
+          url:"../register/server/isUserRepeat.php",
+          data:{username:userVal},
+          async:true,
+          success:function(data){
+
+            if(data.code==1){
+              user_info.innerHTML = "";
+              isRepeat = false;
+              user_icon.className = "ok";
+            }else if(data.code == 0){
+              user_info.innerHTML = data.msg;
+              isRepeat = true;
+              user_icon.className = "no";
+            }else{
+              user_info.innerHTML = "检测失败，请重试......";
+            }
+          },
+        });
+      }
+
+      if(!user.value){
+        user_info.innerHTML = "手机号码不能为空";
+        user_icon.className = "no";
+      }
+      // console.log(isRepeat);
+    }
+
+    //注册函数
+    function register(){
+      if(userReg.test(user.value)&&pwdReg.test(pwd.value)&&!isRepeat){
+        $.ajax({
+          url:"../register/server/register.php",
+          method:"post",
+          data:{username:user.value,userpwd:pwd.value},
+          async:true,
+          success:function(data){
+            if(data.code==1){
+              alert(data.msg);
+              showLogin();
+            }else{
+              alert(data.msg);
+            }
+          },
+          error:function(){
+            alert("注册失败，请重试");
+          }
+        });
+      }else{
+        alert("请填写正确的手机号及密码");
+      }
+    }
+
+    //检查密码函数
+    function checkPwd(){
+
+      if(!pwdReg.test(pwd.value)){
+        pwd_info.innerHTML = "请输入5到12位数字、字母或者下划线";
+        pwd_icon.className = "no";
+      }else{
+        pwd_info.innerHTML = "";
+        pwd_icon.className = "ok";
+      }
+
+    }
+
+
+    //检查登录、注册标题
+    function checkTitle(){
+      for(var i=0;i<title.length;i++){
+        title[i].className = "";
+      }
+      this.className = "current";
+      if(this.innerHTML=="登录"){
+        showLogin();
+      }else{
+        showSigup();
+      }
+    }
+
+    //展示注册按钮函数
+    function showSigup(){
+      login.className = "btn ";
+      sigup.className = "btn show";
+    }
+
+    //展示登录按钮函数
+    function showLogin(){
+      login.className = "btn show";
+      sigup.className = "btn";
+      title[0].className = "current";
+      title[1].className = "";
+    }
+</script>
+</body>
+</html>

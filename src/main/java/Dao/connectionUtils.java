@@ -82,7 +82,7 @@ public class connectionUtils {
         entity=clazz.newInstance();
         Map<String,Object> map =new HashMap<String,Object>();
         //得到ResultSetMetaData对象，获取此 ResultSet 对象的列的编号、类型和属性。
-        ResultSetMetaData rsmd =rs.getMetaData();
+            ResultSetMetaData rsmd =rs.getMetaData();
         if(rs.next()){
             //获取总列数并且进行遍历
             for(int i=0;i<rsmd.getColumnCount();i++){
